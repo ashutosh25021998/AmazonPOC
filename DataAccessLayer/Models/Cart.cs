@@ -12,14 +12,15 @@ namespace DataAccessLayer.Models
         [Key]
         public int CartId { get; set; }
 
-        //[ForeignKey("ProductItem")]
-        //public int ProductItemId { get; set; }
-        //// public virtual ProductItems ProductItems { get; set; }
-        //public ICollection<ProductItems> ProductItems { get; set; }
-        //[ForeignKey("Operator")]
-        //public int OperatorId { get; set; }
-        ////public virtual Operator Operator { get; set; }
-        //public ICollection<Operator> Operators { get; set; }
+        [ForeignKey("ProductItemId")]
+        public int ProductItemId { get; set; }
+        public virtual ProductItems ProductItems { get; set; }
+       
+
+        [ForeignKey("OperatorId")]
+        public int OperatorId { get; set; }
+        public virtual Operator Operator { get; set; }
+        
 
 
         public int Quantity { get; set; }

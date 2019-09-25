@@ -2,15 +2,17 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using ProductRough.ContextFolder;
 
 namespace ProductRough.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    partial class ProductContextModelSnapshot : ModelSnapshot
+    [Migration("20190925065020_foroutpurtjwei")]
+    partial class foroutpurtjwei
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -24,19 +26,11 @@ namespace ProductRough.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OperatorId");
-
-                    b.Property<int>("ProductItemId");
-
                     b.Property<int>("Quantity");
 
                     b.Property<string>("Totalprice");
 
                     b.HasKey("CartId");
-
-                    b.HasIndex("OperatorId");
-
-                    b.HasIndex("ProductItemId");
 
                     b.ToTable("Carts");
                 });
@@ -148,19 +142,6 @@ namespace ProductRough.Migrations
                     b.HasIndex("SupplierId");
 
                     b.ToTable("ProductItemes");
-                });
-
-            modelBuilder.Entity("DataAccessLayer.Models.Cart", b =>
-                {
-                    b.HasOne("ProductRough.Models.Operator", "Operator")
-                        .WithMany()
-                        .HasForeignKey("OperatorId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("ProductRough.Models.ProductItems", "ProductItems")
-                        .WithMany()
-                        .HasForeignKey("ProductItemId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Location", b =>
