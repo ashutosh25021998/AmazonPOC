@@ -23,8 +23,8 @@ namespace DataAccessLayer.Models
         
 
 
-        public int Quantity { get; set; }
-        public string Totalprice { get; set; }
+        public int Quantitycart { get; set; }
+        public int Totalprice { get; set; }
        
    
 

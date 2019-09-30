@@ -28,9 +28,9 @@ namespace ProductRough.Migrations
 
                     b.Property<int>("ProductItemId");
 
-                    b.Property<int>("Quantity");
+                    b.Property<int>("Quantitycart");
 
-                    b.Property<string>("Totalprice");
+                    b.Property<int>("Totalprice");
 
                     b.HasKey("CartId");
 
@@ -62,6 +62,29 @@ namespace ProductRough.Migrations
                     b.HasIndex("OperatorId");
 
                     b.ToTable("Locations");
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ListOfProducts");
+
+                    b.Property<int>("LocationId");
+
+                    b.Property<int>("OperatorId");
+
+                    b.Property<int>("TotalPrice");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("OperatorId");
+
+                    b.ToTable("Orders");
                 });
 
             modelBuilder.Entity("DataAccessLayer.Models.Supplier", b =>
@@ -165,6 +188,19 @@ namespace ProductRough.Migrations
 
             modelBuilder.Entity("DataAccessLayer.Models.Location", b =>
                 {
+                    b.HasOne("ProductRough.Models.Operator", "Operator")
+                        .WithMany()
+                        .HasForeignKey("OperatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
+                {
+                    b.HasOne("DataAccessLayer.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ProductRough.Models.Operator", "Operator")
                         .WithMany()
                         .HasForeignKey("OperatorId")

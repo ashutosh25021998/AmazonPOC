@@ -9,8 +9,8 @@ using ProductRough.ContextFolder;
 namespace ProductRough.Migrations
 {
     [DbContext(typeof(ProductContext))]
-    [Migration("20190925053719_foroutpurtjweifn")]
-    partial class foroutpurtjweifn
+    [Migration("20190930054826_jsadygfasitfsaydsaducvsd")]
+    partial class jsadygfasitfsaydsaducvsd
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -26,11 +26,19 @@ namespace ProductRough.Migrations
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("Quantity");
+                    b.Property<int>("OperatorId");
 
-                    b.Property<string>("Totalprice");
+                    b.Property<int>("ProductItemId");
+
+                    b.Property<int>("Quantitycart");
+
+                    b.Property<int>("Totalprice");
 
                     b.HasKey("CartId");
+
+                    b.HasIndex("OperatorId");
+
+                    b.HasIndex("ProductItemId");
 
                     b.ToTable("Carts");
                 });
@@ -58,19 +66,38 @@ namespace ProductRough.Migrations
                     b.ToTable("Locations");
                 });
 
+            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
+                {
+                    b.Property<int>("OrderId")
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<string>("ListOfProducts");
+
+                    b.Property<int>("LocationId");
+
+                    b.Property<int>("OperatorId");
+
+                    b.Property<int>("TotalPrice");
+
+                    b.HasKey("OrderId");
+
+                    b.HasIndex("LocationId");
+
+                    b.HasIndex("OperatorId");
+
+                    b.ToTable("Orders");
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Supplier", b =>
                 {
                     b.Property<int>("SupplierId")
                         .ValueGeneratedOnAdd()
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int>("OperatorId");
-
                     b.Property<string>("SupplierName");
 
                     b.HasKey("SupplierId");
-
-                    b.HasIndex("OperatorId");
 
                     b.ToTable("Suppliers");
                 });
@@ -148,6 +175,19 @@ namespace ProductRough.Migrations
                     b.ToTable("ProductItemes");
                 });
 
+            modelBuilder.Entity("DataAccessLayer.Models.Cart", b =>
+                {
+                    b.HasOne("ProductRough.Models.Operator", "Operator")
+                        .WithMany()
+                        .HasForeignKey("OperatorId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("ProductRough.Models.ProductItems", "ProductItems")
+                        .WithMany()
+                        .HasForeignKey("ProductItemId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("DataAccessLayer.Models.Location", b =>
                 {
                     b.HasOne("ProductRough.Models.Operator", "Operator")
@@ -156,8 +196,13 @@ namespace ProductRough.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("DataAccessLayer.Models.Supplier", b =>
+            modelBuilder.Entity("DataAccessLayer.Models.Order", b =>
                 {
+                    b.HasOne("DataAccessLayer.Models.Location", "Location")
+                        .WithMany()
+                        .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("ProductRough.Models.Operator", "Operator")
                         .WithMany()
                         .HasForeignKey("OperatorId")

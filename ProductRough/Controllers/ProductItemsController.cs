@@ -28,25 +28,15 @@ namespace ProductRough.Controllers
         [HttpGet("getbyid/{id}")]
         public IActionResult TakeProductItems(int id)
         {
-            var productitems = (from pro in _context.ProductItemes
-                                join supplier in _context.Suppliers on pro.SupplierId equals supplier.SupplierId
-                                select new Supplierdetails
-                                {
-                                    SupplierName = supplier.SupplierName,
-                                    ProductItemName = pro.ProductItemName,
-                                    Quantity = pro.Quantity,
-                                    Price = pro.Price,
-                                    image = pro.image,
-                                    Description = pro.Description
-                                }).FirstOrDefault();
+           
 
-
-            if (productitems == null)
+            var productitem = _context.ProductItemes.Include(p=>p.Supplier).FirstOrDefault(p => p.ProductItemId == id);
+            if (productitem == null)
             {
                 return NotFound();
             }
 
-            return Ok(productitems);
+            return Ok(productitem);
         }
 
 

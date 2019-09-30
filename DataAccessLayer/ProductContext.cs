@@ -52,5 +52,6 @@ namespace ProductRough.ContextFolder
         public DbSet<Location> Locations { get; set; }
         public DbSet<Supplier> Suppliers { get; set; }
         public DbSet<Cart> Carts { get; set; }
+        public DbSet<Order> Orders { get; set; }
     }
 }
